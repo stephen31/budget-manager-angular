@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { LoginFormComponent } from './component/login-form/login-form.component';
 import { LoginPageComponent } from './container/login-page/login-page.component';
