@@ -23,7 +23,10 @@
     "@angular/platform-browser": "^6.0.3",
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/router": "^6.0.3",
-    "@ngxs/store": "^3.0.1",
+    "@ngxs/devtools-plugin": "^3.1.2",
+    "@ngxs/logger-plugin": "^3.1.2",
+    "@ngxs/router-plugin": "^3.1.2",
+    "@ngxs/store": "^3.1.2",
     "core-js": "^2.5.4",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"

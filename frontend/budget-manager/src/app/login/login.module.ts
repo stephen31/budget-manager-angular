@@ -5,7 +5,6 @@ import { LoginPageComponent } from './container/login-page/login-page.component'
 import { LoginRoutingModule } from './login-routing.module';
 import { SharedMaterialModule } from '../shared-material/shared-material.module';
 
-
 @NgModule({
   imports: [
     SharedModule,
