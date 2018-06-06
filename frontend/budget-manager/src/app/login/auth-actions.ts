@@ -1,4 +1,4 @@
-import { User } from './auth-model';
+import { User, Authenticated } from './auth-model';
 
 
 // Actions
@@ -14,12 +14,12 @@ export class Logout {
 // Events
 export class LoginSuccess {
   static type = '[Auth] LoginSucess';
-  constructor(public user: User) {}
+  constructor(public user: Authenticated) {}
 }
 
 export class LoginFailed {
   static type = '[Auth] LoginFailed';
-  constructor(public error: any) {}
+  constructor(public errors: any) {}
 }
 
 export class LoginRedirect {

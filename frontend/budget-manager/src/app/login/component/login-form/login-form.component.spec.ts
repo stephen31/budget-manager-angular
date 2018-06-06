@@ -56,6 +56,6 @@ describe('LoginFormComponent', () => {
     component.createForm();
     spyOn(component.submitted, 'emit');
     component.submitLogin();
-    expect(component.submitted.emit).toHaveBeenCalledWith(true);
+    expect(component.submitted.emit).toHaveBeenCalledWith({ username: '', password: '' });
   });
 });

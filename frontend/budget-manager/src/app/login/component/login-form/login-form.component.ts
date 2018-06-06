@@ -45,7 +45,7 @@ export class LoginFormComponent implements OnInit {
   }
 
   submitLogin() {
-    this.submitted.emit(true);
+    this.submitted.emit(this.loginForm.value);
   }
 
 }
