@@ -1,10 +1,10 @@
 import Mongoose from 'mongoose';
 
 const mongo = Mongoose.connect(
-  'mongodb://stef:s@ds119059.mlab.com:19059/budgetmanagerangular',
+  'mongodb://budgetmanager1:Budgetmanager1@ds247290.mlab.com:47290/budgetmanagerangular',
   {
-    useMongoClient: true
+    // useMongoClient: true
   }
-);
+).catch(error => {console.log(error); throw new Error(erro)});
 
 export default mongo;
