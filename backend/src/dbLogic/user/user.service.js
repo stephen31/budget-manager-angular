@@ -12,7 +12,6 @@ const getUser = async (id) => {
   if (!user) {
     throw new Error('Cant find user');
   }
-
   return user;
 };
 
@@ -46,7 +45,7 @@ const createUser = async (newuser) => {
   return createdUser;
 };
 
-const login = async (username, password) => {
+const login = async (username, password) => {  
   const user = await User.findOne({
     username
   }).catch((error) => {
@@ -63,6 +62,7 @@ const login = async (username, password) => {
   }
 
   user.jwt = jwt.sign({ _id: user._id }, SECRET);
+  
   return user;
 };
 
