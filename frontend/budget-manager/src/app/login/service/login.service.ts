@@ -4,6 +4,25 @@ import { Authenticate, Signon } from '../auth-model';
 import gql from 'graphql-tag';
 import { Observable } from 'rxjs';
 
+const LoginQuery = gql`
+query Login($username: String!, $password:String!) {
+    login(username: $username, password: $password) {
+      username
+      email
+      createdAt
+      jwt
+    }
+}`;
+
+const RegisterMutation = gql`
+mutation Register($username: String!, $email: String!, $password:String!) {
+  addUser(username: $username, email: $email, password: $password) {
+      username
+      email
+      createdAt
+      jwt
+    }
+}`;
 @Injectable({
   providedIn: 'root'
 })
@@ -33,23 +52,3 @@ export class LoginService {
   }
 }
 
-
-const LoginQuery = gql`
-query Login($username: String!, $password:String!) {
-    login(username: $username, password: $password) {
-      username
-      email
-      createdAt
-      jwt
-    }
-}`;
-
-const RegisterMutation = gql`
-mutation Register($username: String!, $email: String!, $password:String!) {
-  addUser(username: $username, email: $email, password: $password) {
-      username
-      email
-      createdAt
-      jwt
-    }
-}`;

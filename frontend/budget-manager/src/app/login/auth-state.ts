@@ -1,5 +1,5 @@
 import { NgxsOnInit, State, Selector, StateContext, Action, Store } from '@ngxs/store';
-import { AuthStateModel, Authenticated } from './auth-model';
+import { AuthStateModel, Authenticated, GraphQlResponse } from './auth-model';
 import { Login, LoginSuccess, LoginFailed } from './auth-actions';
 import { LoginService } from './service/login.service';
 import { map, tap, catchError } from 'rxjs/operators';
@@ -53,8 +53,8 @@ export class AuthState implements NgxsOnInit {
       isPending: true
     });
     return this.loginService.login(action).pipe(
-      tap((user: Authenticated) => {
-        ctx.dispatch(new LoginSuccess(user));
+      map((result) => {
+        ctx.dispatch(new LoginSuccess(result.data));
       }),
       catchError((error) => {
         return ctx.dispatch(new LoginFailed(error));
@@ -70,11 +70,11 @@ export class AuthState implements NgxsOnInit {
     ctx.patchState({
       initialized: true,
       user: {
-        username: event.user.username,
-        email: event.user.email,
-        createAt: event.user.createAt
+        username: event.user.login.username,
+        email: event.user.login.email,
+        createdAt: event.user.login.createdAt
       },
-      jwt: event.user.jwt,
+      jwt: event.user.login.jwt,
       errors: null,
       isPending: false
     });

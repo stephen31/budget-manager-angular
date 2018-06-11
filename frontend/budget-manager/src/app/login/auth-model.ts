@@ -1,3 +1,13 @@
+import { GraphQLError } from 'graphql';
+import { NetworkStatus } from 'apollo-client';
+
+export interface GraphQlResponse {
+    data: any;
+    errors?: GraphQLError[];
+    loading: boolean;
+    networkStatus: NetworkStatus;
+    stale: boolean;
+}
 export interface AuthStateModel {
   initialized: boolean;
   user: User;
@@ -9,7 +19,7 @@ export interface AuthStateModel {
 export interface User {
   username: string;
   email: string;
-  createAt: Date;
+  createdAt: Date;
 }
 
 export interface Authenticate {

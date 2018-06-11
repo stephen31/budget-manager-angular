@@ -14,7 +14,7 @@ export class Logout {
 // Events
 export class LoginSuccess {
   static type = '[Auth] LoginSucess';
-  constructor(public user: Authenticated) {}
+  constructor(public user: any) {}
 }
 
 export class LoginFailed {
