@@ -15,7 +15,7 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-
+-- CREATE DATABASE budget_manager SET utf8 COLLATE utf8_unicode_ci;
 --
 -- Table structure for table `budget_category`
 --
