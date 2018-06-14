@@ -147,3 +147,7 @@ ALTER TABLE `budget_category_user`
 --
 ALTER TABLE `transaction`
   ADD CONSTRAINT `transaction_fk_budget_category_id` FOREIGN KEY (`budget_category_id`) REFERENCES `budget_category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  
+  
+  INSERT INTO role(name) VALUES('ROLE_USER');
+INSERT INTO role(name) VALUES('ROLE_ADMIN');
