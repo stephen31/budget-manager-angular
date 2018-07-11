@@ -6,6 +6,7 @@ import config from './config';
 // import nodemailer from 'nodemailer';
 // import smtpTransport from 'nodemailer-smtp-transport';
 const algorithm = 'aes-256-ctr';
+console.log(config);
 const secret = config.key.privateKey;
 
 // encryp function 

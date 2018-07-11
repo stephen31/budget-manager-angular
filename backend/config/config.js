@@ -2,6 +2,7 @@
  * Globab config
  */
 
-const config =  require('./env/' + process.env.NODE_ENV + '.js');
+import config from './env/envConf';
+console.log( config);
 
 export default config;
