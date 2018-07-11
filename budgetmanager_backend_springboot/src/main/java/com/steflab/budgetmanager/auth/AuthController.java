@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,10 +26,13 @@ import com.steflab.budgetmanager.user.RoleDAO;
 import com.steflab.budgetmanager.user.RoleName;
 import com.steflab.budgetmanager.user.User;
 import com.steflab.budgetmanager.user.UserDAO;
+import com.steflab.budgetmanager.user.UserDTO;
+import com.steflab.budgetmanager.user.UserService;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.Collections;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -39,6 +43,9 @@ public class AuthController {
 
     @Autowired
     UserDAO userRepository;
+    
+    @Autowired
+    UserService userService;
 
     @Autowired
     RoleDAO roleRepository;
@@ -60,9 +67,10 @@ public class AuthController {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
+        
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        UserDTO user = userService.getUserByUsernameOrEmail(loginRequest.getUsernameOrEmail()).orElseThrow(() -> new UsernameNotFoundException("User not found with username or email"));
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, user));
     }
 
     @PostMapping("/signup")

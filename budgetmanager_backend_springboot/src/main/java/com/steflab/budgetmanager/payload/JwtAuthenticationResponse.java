@@ -1,11 +1,15 @@
 package com.steflab.budgetmanager.payload;
 
+import com.steflab.budgetmanager.user.UserDTO;
+
 public class JwtAuthenticationResponse {
     private String accessToken;
     private String tokenType = "Bearer";
+    private UserDTO user;
 
-    public JwtAuthenticationResponse(String accessToken) {
+    public JwtAuthenticationResponse(String accessToken, UserDTO user) {
         this.accessToken = accessToken;
+        this.user = user;
     }
 
     public String getAccessToken() {
@@ -23,4 +27,12 @@ public class JwtAuthenticationResponse {
     public void setTokenType(String tokenType) {
         this.tokenType = tokenType;
     }
+
+	public UserDTO getUser() {
+		return user;
+	}
+
+	public void setUser(UserDTO user) {
+		this.user = user;
+	}
 }

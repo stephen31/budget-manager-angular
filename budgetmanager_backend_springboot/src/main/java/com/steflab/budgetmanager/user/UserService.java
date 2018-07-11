@@ -3,6 +3,7 @@ package com.steflab.budgetmanager.user;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,15 @@ public class UserService {
 			return Optional.empty();
 		}
 		return Optional.of(toUserDTO(userEntity));
+	}
+	
+	public Optional<UserDTO> getUserByUsernameOrEmail(String usernameOrEmail) {
+		User user = userDAO.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail).orElse(null);
+		if(user == null) {
+			return Optional.empty();
+		}
+		
+		return Optional.of(toUserDTO(user));
 	}
 	
 //	public UserDTO createUser(User userIn) {

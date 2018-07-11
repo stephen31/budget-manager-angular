@@ -1,54 +1,44 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import { Authenticate, Signon } from '../auth-model';
-import gql from 'graphql-tag';
 import { Observable } from 'rxjs';
+import { of } from 'rxjs/observable/of';
+import { HttpClient } from '@angular/common/http';
+import { LoginModule } from '../login.module';
+import { Authenticate } from '../models/login.models';
+import { catchError } from 'rxjs/operators';
 
-const LoginQuery = gql`
-query Login($username: String!, $password:String!) {
-    login(username: $username, password: $password) {
-      username
-      email
-      createdAt
-      jwt
-    }
-}`;
-
-const RegisterMutation = gql`
-mutation Register($username: String!, $email: String!, $password:String!) {
-  addUser(username: $username, email: $email, password: $password) {
-      username
-      email
-      createdAt
-      jwt
-    }
-}`;
+const LOGIN_URL = 'http://localhost:8080/api/auth/signin';
 @Injectable({
-  providedIn: 'root'
+  providedIn: LoginModule
 })
 export class LoginService {
 
-  constructor(private apollo: Apollo) {
+  constructor(private http: HttpClient) {
   }
 
-  login(credentials: Authenticate): Observable<any> {
-    return this.apollo.watchQuery<any>({
-      query: LoginQuery, variables: {
-        username: credentials.username,
-        password: credentials.password
-      }
-    }).valueChanges;
+  login(credentials: Authenticate): Observable<{User}> {
+    this.http.post(LOGIN_URL, credentials).pipe(
+      catchError(error => of(error))
+    )
   }
 
-  register(payload: Signon): Observable<any> {
-    return this.apollo.mutate({
-      mutation: RegisterMutation,
-      variables: {
-        username: payload.username,
-        email: payload.email,
-        password: payload.password
-      }
-    });
-  }
+  // login(credentials: Authenticate): Observable<any> {
+  //   return this.apollo.watchQuery<any>({
+  //     query: LoginQuery, variables: {
+  //       username: credentials.username,
+  //       password: credentials.password
+  //     }
+  //   }).valueChanges;
+  // }
+
+  // register(payload: Signon): Observable<any> {
+  //   return this.apollo.mutate({
+  //     mutation: RegisterMutation,
+  //     variables: {
+  //       username: payload.username,
+  //       email: payload.email,
+  //       password: payload.password
+  //     }
+  //   });
+  // }
 }
 
