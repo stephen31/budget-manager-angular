@@ -1,34 +1,75 @@
 /**
  * Common function 
  */
-import crypto from 'crypto';
+import {createCipher, createCipheriv, createDecipher, createDecipheriv, randomBytes} from 'crypto';
 import config from './config';
 // import nodemailer from 'nodemailer';
 // import smtpTransport from 'nodemailer-smtp-transport';
 const algorithm = 'aes-256-ctr';
-console.log(config);
-const secret = config.key.privateKey;
-
 // encryp function 
 
-const _encrypt = (password) => {
-    const cipher = crypto.createCipher(algorithm, secret);
-    let crypted = cipher.update(password, 'utf8', 'hex');
-    crypted += cipher.final('hex');
+
+const key = process.env.KEY || config.key.privateKey;
+const inputEncoding = 'utf8';
+const outputEncoding = 'hex';
+
+/**
+ * Encrypt function using only the key.
+ * @param {string} value to encrypt
+ */
+const _encrypt = value => {
+    const cipher = createCipher(algorithm, key);
+    let crypted = cipher.update(value, inputEncoding, outputEncoding);
+    crypted += cipher.final(outputEncoding);
     return crypted;
 }
 
-const _decrypt = (password) => {
-    const decipher = crypto.createDecipher(algorithm, secret);
-    let dec = decipher.update(password, 'hex', 'utf8');
-    dec += decipher.final('utf8');
+/**
+ * Decrypt function using only the key
+ * @param {string} value to decrypt
+ */
+const _decrypt = value => {
+    const decipher = createDecipher(algorithm, key);
+    let dec = decipher.update(value, outputEncoding, inputEncoding);
+    dec += decipher.final(inputEncoding);
     return dec;
 }
 
-export const encrypt = (password) =>_encrypt(password);
+/**
+ * Encrypt using an initialisation vector
+ * @param {string} value to encrypt
+ */
+const _encryptIv = value => {
+    const iv = new Buffer(randomBytes(16));
+    const cipher = createCipheriv(algorithm, key, iv);
+    let crypted = cipher.update(value, inputEncoding, outputEncoding);
+    crypted += cipher.final(outputEncoding);
+    return `${iv.toString('hex')}:${crypted.toString()}`;
+}
 
-export const decrypt = (password) => _decrypt(password);
+/**
+ * Decrypt using an initialisation vector
+ * @param {string} value value to decrypt
+ */
+const _decryptIv  = value => {
+    const textParts = value.split(':');
 
+    //extract the IV from the first half of the value
+    const IV = new Buffer(textParts.shift(), outputEncoding);
+
+    //extract the encrypted text without the IV
+    const encryptedText = new Buffer(textParts.join(':'), outputEncoding);
+
+    //decipher the string
+    const decipher = createDecipheriv(algorithm,key, IV);
+    let decrypted = decipher.update(encryptedText,  outputEncoding, inputEncoding);
+    decrypted += decipher.final(inputEncoding);
+    return decrypted.toString();
+}
+export const encrypt = (value) =>_encrypt(value);
+export const decrypt = (value) => _decrypt(value);
+export const encryptIv = (value) =>_encryptIv(value);
+export const decryptIv = (value) => _decryptIv(value);
 // exports.sendMailVerificationLink = (user, token, callback) => {
 //     const link = 'http://' + config.host + ':' + config.port + '/' + config.email.verifyEmailUrl + '/' + token;
 //     const from = `StephenLab Server<${config.email.username}>`;

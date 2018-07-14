@@ -11,7 +11,7 @@ const developmentConf = {
     port,
     db: dbUri,
     key: {
-        privateKey: '37LvfsdfsdfXvjYOh9Y',
+        privateKey: 'b2df428b9929d3ace7c598bbf4e496b2',
         tokenExpiry: 60 //1 hour
     },
     xsrfToken: uid.sync(18),

@@ -3,23 +3,20 @@
  */
 
 import mongoose from 'mongoose';
-import {encrypt, decrypt} from '../../config/common';
+import {encryptIv, decryptIv} from '../../config/common';
 // import boom from 'Boom';
 import jwt from 'jsonwebtoken';
 import config from '../../config/config';
 export const User = mongoose.model('User');
 
-const usernameExist = (username) => {
-    User.findOne({
+const usernameExist = (username) => User.findOne({
         username
     }).exec();
-}
 
-const emailExist = (email) => {
-    User.findOne({
+const emailExist = (email) => User.findOne({
         email
     }).exec();
-}
+
 export const login = (req, res) => {
 
     if (!req.body || !req.body.username || !req.body.password) {
@@ -35,7 +32,7 @@ export const login = (req, res) => {
         if (!user.isVerified) {
             return res.status(409).json({ message: 'Your account is not verified' });
         }
-        if (req.body.password === decrypt(user.password)) {
+        if (req.body.password === decryptIv(user.password)) {
             //creation du tokenpayload
             const tokenPayload = {
                 username: user.username,
@@ -88,8 +85,7 @@ export const create = async (req, res, next) => {
                 message: 'Email already exist'
             });
         }
-
-        req.body.password = encrypt(req.body.password);
+        req.body.password = encryptIv(req.body.password);
         //const user = new User(req.body);
 
         //const usercreated = await user.save();
@@ -101,9 +97,11 @@ export const create = async (req, res, next) => {
 
         // let responseEmailValidation = await common.sendMailVerificationLink(usercreated, jwt.sign(tokenData, config.key.privateKey));
         // res.status(200).json({success: true, message:'confimation link was sent to your email'});
+        const user = new User(req.body);
+        await user.save();
         res.status(200).json({ success: true, message: 'Account created successufully' });
     } catch (error) {
-        next(error);
+        next(error)
     }
 
 };

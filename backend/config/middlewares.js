@@ -33,4 +33,6 @@ export const checkJwtToken = (req, res, next) => {
    Error Middleware
 */
 
-export const errorHandler = (err, req, res) => res.status(500).json(err);
+export const errorHandler = (err, req, res) => {
+    res.status(500).json(err);
+};

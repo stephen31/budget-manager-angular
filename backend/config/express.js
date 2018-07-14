@@ -8,6 +8,8 @@ import cookieParser from 'cookie-parser';
 // import session from 'express-session';
 import logger from 'morgan';
 import {checkJwtToken, errorHandler} from './middlewares';
+import userRoutes from '../app/user/user.server.routes';
+import authRoutes from '../app/auth/auth.server.routes';
 import path from 'path';
 
 
@@ -31,8 +33,8 @@ export default function() {
 
     apiRouter.use(checkJwtToken);
 
-    require('../app/user/user.server.routes')(apiRouter);
-    require('../app/auth/auth.server.routes')(authRouter);
+    userRoutes(apiRouter);
+    authRoutes(authRouter);
 
     app.use('/api', apiRouter);
     app.use('/', authRouter);

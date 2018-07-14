@@ -3,17 +3,18 @@
  * Auth routes
  */
 
-import user from '../user/user.server.controller';
+import {login, create} from '../user//user.server.controller';
+
 
 export default function (app) {
      app.route('/login')
-        .post(user.login);
+        .post(login);
     app.route('/register')
-        .post(user.create);
-    app.route('/verifyEmail/:token')
-        .get(user.verifyEmail);
-    app.route('/resetPassword')
-        .post(user.resetPassword);
-    app.route('/forgotPassword')
-        .post(user.resetPassword);
- };
+        .post(create);
+    // app.route('/verifyEmail/:token')
+    //     .get(user.verifyEmail);
+    // app.route('/resetPassword')
+    //     .post(user.resetPassword);
+    // app.route('/forgotPassword')
+    //     .post(user.resetPassword);
+ }
