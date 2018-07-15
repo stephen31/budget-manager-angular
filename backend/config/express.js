@@ -6,6 +6,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 // import session from 'express-session';
+import cors from 'cors';
 import logger from 'morgan';
 import {checkJwtToken, errorHandler} from './middlewares';
 import userRoutes from '../app/user/user.server.routes';
@@ -15,6 +16,8 @@ import path from 'path';
 
 export default function() {
     const app = express();
+
+    app.use(cors({credentials: true, origin: 'http://localhost:4200'}));
     const apiRouter = express.Router();
     const authRouter = express.Router();
 
