@@ -1,27 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngxs/store';
-import { Login } from '../../auth-actions';
-import { Authenticate } from '../../auth-model';
 import { Observable } from 'rxjs';
-import { AuthState } from '../../auth-state';
+import { Authenticate } from '../../../core/models/login.models';
+import { AuthStore } from '../../../core/store/auth.store';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
-  selector: 'app-login-page',
+  selector: 'bm-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent {
 
   pending$: Observable<boolean>;
-  error$: Observable<any>;
+  errorMessage$: Observable<any>;
 
-  constructor(private store: Store) {
-    this.pending$ = this.store.select(AuthState.getPending);
-    this.error$ = this.store.select(AuthState.getErrors);
+  constructor(private authStore: AuthStore, private authService: AuthService) {
+    this.pending$ = this.authStore.isPendingLogin;
+    this.errorMessage$ = this.authStore.errorMessage;
   }
 
   onSubmit(event: Authenticate) {
-    this.store.dispatch(new Login(event.username, event.password));
+    this.authService.login({username: event.username, password: event.password});
   }
 
 }

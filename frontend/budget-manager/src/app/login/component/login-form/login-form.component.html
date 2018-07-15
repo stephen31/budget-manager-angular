@@ -21,9 +21,9 @@
           <mat-error *ngIf="password.errors && password.errors.minlength">Password should have a minimum of 4 characters</mat-error>          
         </mat-form-field>
         <div class="extra-infos">
-          <label class="small">not register yet? <a href="#"> register here</a></label>
+          <label class="small">not register yet? <a routerLink="/register"> register here</a></label>
           <mat-error class="mt-2" *ngIf="errorMessage"> 
-              {{ errorMessage.graphQLErrors[0].message}}         
+              {{ errorMessage}}         
           </mat-error>
         </div>
 

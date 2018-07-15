@@ -1,0 +1,65 @@
+<mat-card>
+  <mat-card-title>
+    Register
+  </mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="registerForm" (ngSubmit)="submitRegister()">
+      <div class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label>name</mat-label>
+          <input formControlName="name" matInput placeholder="name" type="text">
+          <mat-icon matSuffix>perm_identity</mat-icon>
+          <!-- <mat-hint>Hint</mat-hint> -->
+          <mat-error *ngIf="name.errors && name.errors.required">Name is required</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input formControlName="username" matInput placeholder="username" type="text">
+          <mat-icon matSuffix>person</mat-icon>
+          <!-- <mat-hint>Hint</mat-hint> -->
+          <mat-error *ngIf="username.errors && username.errors.required">Username is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input formControlName="email" matInput placeholder="email" type="text">
+          <mat-icon matSuffix>email</mat-icon>
+          <!-- <mat-hint>Hint</mat-hint> -->
+          <mat-error *ngIf="email.errors && email.errors.required">Email is required</mat-error>
+          <mat-error *ngIf="email.errors && email.errors.email">Email is incorrect</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input formControlName="password" matInput placeholder="password" type="password">
+          <mat-icon matSuffix>lock</mat-icon>
+          <!-- <mat-hint>10 max characters</mat-hint> -->
+          <mat-error *ngIf="password.errors && password.errors.required">Password is required</mat-error>
+          <mat-error *ngIf="password.errors && password.errors.minlength">Password should have a minimum of 6 characters</mat-error>          
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input formControlName="confirmPassword" matInput placeholder="password" type="password">
+          <mat-icon matSuffix>lock</mat-icon>
+          <!-- <mat-hint>10 max characters</mat-hint> -->
+          <mat-error *ngIf="confirmPassword.errors && confirmPassword.errors.required">Password is required</mat-error>
+          <mat-error *ngIf="confirmPassword.errors && confirmPassword.errors.minlength">Password should have a minimum of 6 characters</mat-error>
+          <mat-error *ngIf="confirmPassword.errors && confirmPassword.errors.matchPassword">Both passwords are differents</mat-error>          
+        </mat-form-field>
+
+        <div class="extra-infos">
+          <label class="small">already registered ? <a routerLink="/login"> login here</a></label>
+          <mat-error class="mt-2" *ngIf="errorMessage"> 
+              {{ errorMessage}}         
+          </mat-error>
+        </div>
+
+        <div class="register-buttons">
+          <button mat-raised-button color="primary" [disabled]="registerForm.invalid">Click me!</button>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

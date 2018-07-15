@@ -1,12 +1,11 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
 @Component({
-  selector: 'app-login-form',
+  selector: 'bm-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss']
 })
-export class LoginFormComponent implements OnInit {
+export class LoginFormComponent {
 
   @Input()
   set pending(isPending: boolean) {
@@ -18,7 +17,7 @@ export class LoginFormComponent implements OnInit {
   }
 
   @Input() errorMessage: string;
-  @Output() submitted = new EventEmitter<boolean>();
+  @Output() submitted = new EventEmitter<any>();
 
   loginForm: FormGroup;
 
@@ -34,18 +33,17 @@ export class LoginFormComponent implements OnInit {
     this.createForm();
   }
 
-  ngOnInit() {
-  }
-
   createForm() {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(4)]]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   submitLogin() {
-    this.submitted.emit(this.loginForm.value);
+    if (this.loginForm.valid) {
+      this.submitted.emit(this.loginForm.value);
+    }
   }
 
 }

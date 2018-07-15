@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  justify-content: center;
+  margin: 72px 0;
+}
+
+mat-card {
+  max-width: 500px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.extra-infos {
+  padding: 10px;
+}
+
+.register-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
