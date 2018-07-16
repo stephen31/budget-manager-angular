@@ -1,0 +1,27 @@
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+a {
+  color: white !important;
+}
+
+.bm-logo {
+  margin-right: 10px;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.navbar-user-button {
+  margin-left: 10px;
+}
+
+.navbar-user-menu {
+  margin-top: 10px;
+  font-size: 40px;
+}

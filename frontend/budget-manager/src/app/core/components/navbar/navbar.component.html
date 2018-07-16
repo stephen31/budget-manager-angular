@@ -1,0 +1,27 @@
+<nav>
+    <mat-toolbar color="primary">
+        <mat-toolbar-row>
+          <a class="bm-logo" aria-label="Budget Manager" aria-disabled="false" routerLink="/" >
+            Budget Manager
+          </a>
+          <ng-container *ngIf="isLoggedIn">
+              <span>
+                  <a routerLink="/dashboard"><button mat-button> Dashboard</button></a>
+                  <a routerLink="/transactions"><button mat-button> Transactions</button></a>
+                </span>
+                <span class="example-spacer"></span>
+                <mat-icon class="example-icon">search</mat-icon>
+                <a class="navbar-user-button">
+                    <button mat-button [matMenuTriggerFor]="menu">
+                      <span>{{user.username}}</span>
+                    </button>
+                </a>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>Infos</button>
+                    <button mat-menu-item>Logout</button>
+                </mat-menu>
+          </ng-container>
+
+        </mat-toolbar-row>
+      </mat-toolbar>
+</nav>
