@@ -10,13 +10,7 @@ import { User } from './models/user.model';
 })
 export class CoreComponent implements OnInit {
 
-  user$: Observable<User>;
-  isLoggedIn$: Observable<boolean>;
-
-  constructor(private authStore: AuthStore) {
-    this.user$ = authStore.user;
-    this.isLoggedIn$ = authStore.isLoggedIn;
-  }
+  constructor() {}
 
   ngOnInit() {
   }

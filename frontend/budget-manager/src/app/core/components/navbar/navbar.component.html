@@ -17,8 +17,8 @@
                     </button>
                 </a>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Infos</button>
-                    <button mat-menu-item>Logout</button>
+                    <button mat-menu-item (click)="infosClicked($event)">Infos</button>
+                    <button mat-menu-item (click)="logoutClicked($event)">Logout</button>
                 </mat-menu>
           </ng-container>
 

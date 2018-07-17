@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedMaterialModule } from './shared-material/shared-material.module';
@@ -15,7 +14,8 @@ import { CoreModule } from './core/core.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    CoreModule
+    CoreModule,
+
   ],
   providers: [],
   bootstrap: [CoreComponent]

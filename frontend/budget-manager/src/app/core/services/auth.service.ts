@@ -8,6 +8,7 @@ import { User } from '../models/user.model';
 import { Register } from '../models/register.models';
 import { AuthStore } from '../store/auth.store';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie';
 
 const LOGIN_URL = environment.serverUrl + '/login';
 const REGISTER_URL = environment.serverUrl + '/register';
@@ -17,10 +18,32 @@ const REGISTER_URL = environment.serverUrl + '/register';
 })
 export class AuthService {
 
-  constructor(private http: HttpClient, private authStore: AuthStore, private route: Router) {
+  constructor(private http: HttpClient, private authStore: AuthStore, private route: Router, private cookieService: CookieService) {
+  }
+
+  getCookie(key: string) {
+    return this.cookieService.get(key);
+  }
+
+  removeCookie() {
+    this.cookieService.remove('access_token');
+  }
+
+  saveXsrfToken(token) {
+    localStorage.setItem('xsrfToken', token);
+  }
+
+  getXsrfToken(): string {
+    return localStorage.getItem('xsrfToken');
+  }
+
+  removeXsrfToken() {
+    localStorage.removeItem('xsrfToken');
   }
 
   login(credentials: Authenticate) {
+    this.removeCookie();
+    this.removeXsrfToken();
     this.authStore.setIsPendingLogin(true);
     this.http.post(LOGIN_URL, credentials, { withCredentials: true }).pipe(
       catchError((error) => {
@@ -29,6 +52,7 @@ export class AuthService {
     ).subscribe((response: { data: User, message: string }) => {
       this.authStore.setUser(response.data);
       this.authStore.setErrorMessage(null);
+      this.saveXsrfToken(response.data.xsrfToken);
       this.authStore.setIsLoggedIn(true);
       this.authStore.setIsPendingLogin(false);
     }, (error) => {
@@ -39,12 +63,16 @@ export class AuthService {
   }
 
   register(payload: Register) {
+    this.removeCookie();
+    this.removeXsrfToken();
+    this.cookieService.remove('access_token');
     this.http.post(REGISTER_URL, payload, { withCredentials: true }).pipe(
       catchError((error) => {
         return throwError(error.error);
       })
     ).subscribe((response: { data: User, message: string }) => {
       this.authStore.setUser(response.data);
+      this.saveXsrfToken(response.data.xsrfToken);
       this.authStore.setErrorMessage(null);
       this.authStore.setIsLoggedIn(true);
       this.authStore.setIsPendingRegister(false);
@@ -54,5 +82,11 @@ export class AuthService {
       this.authStore.setErrorMessage(error.message);
       this.authStore.setIsPendingRegister(false);
     });
+  }
+
+  logout() {
+    this.removeCookie();
+    this.removeXsrfToken();
+    this.authStore.setIsLoggedIn(false);
   }
 }

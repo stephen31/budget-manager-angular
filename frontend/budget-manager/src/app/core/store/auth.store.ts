@@ -19,7 +19,6 @@ export class AuthStore {
   public readonly errorMessage: Observable<string> = this._errorMessage.asObservable();
   public readonly user: Observable<User> = this._user.asObservable();
 
-
   public setIsLoggedIn(value: boolean) {
     this._isLoggedIn.next(value);
   }

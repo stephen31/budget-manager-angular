@@ -1,0 +1,8 @@
+<bm-navbar 
+  [user]="user$ | async"
+  [isLoggedIn]= "isLoggedIn$ | async"
+  (infos)="goToInfos($event)"
+  (logout)="logout($event)"
+>
+</bm-navbar>
+
