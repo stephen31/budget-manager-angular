@@ -10,13 +10,15 @@ import {
 // import boom from 'Boom';
 import jwt from 'jsonwebtoken';
 import config from '../../config/config';
-export const User = mongoose.model('User');
+const User = mongoose.model('User');
+const Account = mongoose.model('Account');
+const Category = mongoose.model('Category');
 
-const usernameExist = (username) => User.findOne({
+export const usernameExist = (username) => User.findOne({
   username
 }).exec();
 
-const emailExist = (email) => User.findOne({
+export const emailExist = (email) => User.findOne({
   email
 }).exec();
 
@@ -99,19 +101,66 @@ export const create = async (req, res, next) => {
       });
     }
     req.body.password = encryptIv(req.body.password);
-    //const user = new User(req.body);
 
-    //const usercreated = await user.save();
-
-    // const tokenData = {
-    //     username: usercreated.username,
-    //     id: usercreated._id
-    // };
-
-    // let responseEmailValidation = await common.sendMailVerificationLink(usercreated, jwt.sign(tokenData, config.key.privateKey));
-    // res.status(200).json({success: true, message:'confimation link was sent to your email'});
     const user = new User(req.body);
     await user.save();
+
+    const account = new Account();
+    account.user = user;
+
+    // Create Default categories 
+    const groceries_cat = new Category({
+        name: 'Groceries',
+        budget: 1000,
+        icon_name: 'groceries_icon',
+        user
+    });
+
+    await groceries_cat.save();
+
+    const rent_cat = new Category({
+        name: 'Rent',
+        budget: 1000,
+        icon_name: 'rent_icon',
+        user
+    });
+    await rent_cat.save();
+
+    const shopping_cat = new Category({
+        name: 'Shopping',
+        budget: 300,
+        icon_name: 'shopping_icon',
+        user
+    });
+    await shopping_cat.save();
+
+    const entertainment_cat = new Category({
+        name: 'Entertainment',
+        budget: 300,
+        icon_name: 'entertainment_icon',
+        user
+    })
+    await entertainment_cat.save();
+
+    const other_cat = new Category({
+        name: 'Others',
+        budget: 200,
+        icon_name: 'others_icon',
+        user
+    })
+    await other_cat.save();
+
+    const bills_cat = new Category({
+        name: 'Bills',
+        budget: 1000,
+        icon_name: 'bills_icon',
+        user
+    })
+    await bills_cat.save();
+
+    account.categories.push(groceries_cat, rent_cat, shopping_cat, entertainment_cat, other_cat, bills_cat);
+
+    await account.save();
 
     //creation du tokenpayload
     const tokenPayload = {
@@ -190,88 +239,3 @@ export const userById = (req, res, next, id) => {
     });
 };
 
-// export const verifyEmail = (req, res, next) => {
-//   jwt.verify(req.params.token, config.key.privateKey, (err, decoded) => {
-//     if (err) {
-//       return next(err);
-//     }
-//     User.findById(decoded.id, (err, user) => {
-//       if (err) return next(err);
-//       else if (user === null) {
-//         res.status(422).json({
-//           message: 'email not recognized'
-//         });
-//       } else {
-//         user.isVerified = true;
-//         User.findByIdAndUpdate(decoded.id, user, (err, userUpdated) => {
-//           if (err) return next(err);
-//           return res.status(200).json({
-//             message: 'Email sucessfully verified'
-//           });
-//         });
-//       }
-//     });
-
-//   });
-// };
-
-// export const resetPassword = (req, res, next) => {
-//     Jwt.verify(req.body.token, privateKey, (err, decoded) => {
-//         if (err) return next(err);
-//         else {
-//             User.findUserByIdAndUserName(decoded.id, decoded.username, (err, user) => {
-//                 if (err) {
-//                     return next(err);
-//                 } else if (user === null) {
-//                     return res.status(422).json({
-//                         message: `Email not recognised`
-//                     });
-//                 } else if (req.body.newPassword !== req.body.confirmNew) {
-//                     return res.status(400).send({
-//                         message: `Password Mismatch`
-//                     });
-//                 } else {
-//                     user.password = common.encrypt(req.body.newPassword);
-//                     User.updateUser(user, (err, user) => {
-//                         if (!err) {
-//                             return res.json({
-//                                 message: `password changed successfully`
-//                             });
-//                         } else {
-//                             return next(err);
-//                         }
-//                     });
-//                 }
-//             });
-//         }
-//     });
-// };
-
-// export const forgotPassword = async(req, res, next) => {
-//     try {
-//         let user = await User.findOne({
-//             email: req.body.email
-//         }).exec();
-//         if (!user) {
-//             return res.status(409).json({
-//                 message: 'Email not exist'
-//             });
-//         }
-//         let tokenData = {
-//             username: user.username,
-//             id: user._id,
-//             email: user.email
-//         };
-
-//         let msg = await common.sentMailForgotPassword(user, jwt.sign(tokenData, config.key.privateKey));
-//         if (msg) {
-//             return res.status(200).json({
-//                 success: true,
-//                 message: 'reset password link sent to your email adress'
-//             });
-//         }
-
-//     } catch (error) {
-//         return next(error);
-//     }
-// };

@@ -5,7 +5,11 @@
 import config from './config';
 import mongoose from 'mongoose';
 import '../app/user/user.server.model.js';
-import '../app/oauth2/client.server.model.js';
+import '../app/category/category.server.model.js';
+import '../app/transaction/transaction.server.model.js';
+import '../app/account/account.server.model.js';
+
+
 mongoose.Promise = global.Promise;
 
 export default function () {
