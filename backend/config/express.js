@@ -35,6 +35,8 @@ export default function() {
     // }));
 
     apiRouter.use(checkJwtToken);
+    // authRouter.use(checkJwtToken);
+
 
     userRoutes(apiRouter);
     authRoutes(authRouter);

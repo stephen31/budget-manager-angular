@@ -10,6 +10,7 @@ import jwt from 'jsonwebtoken';
 /**Check jwt token middleware */
 
 export const checkJwtToken = (req, res, next) => {
+  console.log('dudu');
   const token = req.cookies.access_token;
   if (token) {
     jwt.verify(token, config.key.privateKey, (err, decodedPayload) => {
