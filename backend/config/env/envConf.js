@@ -12,7 +12,7 @@ const developmentConf = {
     db: dbUri,
     key: {
         privateKey: 'b2df428b9929d3ace7c598bbf4e496b2',
-        tokenExpiry: 1 //1 hour
+        tokenExpiry: '1d'
     },
     xsrfToken: uid.sync(18),
 }

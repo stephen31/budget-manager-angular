@@ -8,9 +8,11 @@ import cookieParser from 'cookie-parser';
 // import session from 'express-session';
 import cors from 'cors';
 import logger from 'morgan';
-import {checkJwtToken, errorHandler} from './middlewares';
+import {checkJwtToken, errorHandler, fillAccountAndUserdetails} from './middlewares';
 import userRoutes from '../app/user/user.server.routes';
 import authRoutes from '../app/auth/auth.server.routes';
+import transactionsRoutes from '../app/transaction/transaction.server.routes';
+import categoriesRoutes from '../app/category/category.server.routes'
 import path from 'path';
 
 
@@ -35,10 +37,13 @@ export default function() {
     // }));
 
     apiRouter.use(checkJwtToken);
+    apiRouter.use(fillAccountAndUserdetails);
     // authRouter.use(checkJwtToken);
 
 
     userRoutes(apiRouter);
+    transactionsRoutes(apiRouter);
+    categoriesRoutes(apiRouter);
     authRoutes(authRouter);
 
     app.use('/api', apiRouter);
