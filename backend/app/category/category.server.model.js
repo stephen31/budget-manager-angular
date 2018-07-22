@@ -2,8 +2,9 @@ import mongoose from 'mongoose'
 
 const CategorySchema = new mongoose.Schema({
   name: {type: String, required: true, trim: true},
-  icon_name: {type: String, required: true, trim: true, default:'defaul_category'},
-  user:  { type : mongoose.Schema.Types.ObjectId, ref : 'User' },
+  iconName: {type: String, required: true, trim: true, default:'defaul_category'},
+  user: {type : mongoose.Schema.Types.ObjectId, ref: 'User'},
+  transactions: [{type : mongoose.Schema.Types.ObjectId, ref: 'Transaction'}],
   budget: {type: Number}
 })
 
