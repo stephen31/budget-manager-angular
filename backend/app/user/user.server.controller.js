@@ -32,7 +32,7 @@ export const login = (req, res) => {
 
   User.findOne({
     username: req.body.username
-  }, (err, user) => {
+  }).populate('account').exec((err, user) => {
     if (err || (!user)) {
       return res.status(409).json({
         message: 'Invalid Username'
@@ -49,6 +49,7 @@ export const login = (req, res) => {
         username: user.username,
         email: user.email,
         id: user._id,
+        accountId: user.account._id,
         xsrfToken: config.xsrfToken
       };
 
@@ -100,20 +101,14 @@ export const create = async (req, res, next) => {
         message: 'Email already exist'
       });
     }
-    req.body.password = encryptIv(req.body.password);
-
-    const user = new User(req.body);
-    await user.save();
-
+    // Create account
     const account = new Account();
-    account.user = user;
 
     // Create Default categories 
     const groceries_cat = new Category({
         name: 'Groceries',
         budget: 1000,
-        icon_name: 'groceries_icon',
-        user
+        iconName: 'groceries_icon'
     });
 
     await groceries_cat.save();
@@ -121,40 +116,35 @@ export const create = async (req, res, next) => {
     const rent_cat = new Category({
         name: 'Rent',
         budget: 1000,
-        icon_name: 'rent_icon',
-        user
+        iconName: 'rent_icon'
     });
     await rent_cat.save();
 
     const shopping_cat = new Category({
         name: 'Shopping',
         budget: 300,
-        icon_name: 'shopping_icon',
-        user
+        iconName: 'shopping_icon'
     });
     await shopping_cat.save();
 
     const entertainment_cat = new Category({
         name: 'Entertainment',
         budget: 300,
-        icon_name: 'entertainment_icon',
-        user
+        iconName: 'entertainment_icon'
     })
     await entertainment_cat.save();
 
     const other_cat = new Category({
         name: 'Others',
         budget: 200,
-        icon_name: 'others_icon',
-        user
+        iconName: 'others_icon'
     })
     await other_cat.save();
 
     const bills_cat = new Category({
         name: 'Bills',
         budget: 1000,
-        icon_name: 'bills_icon',
-        user
+        iconName: 'bills_icon',
     })
     await bills_cat.save();
 
@@ -162,15 +152,22 @@ export const create = async (req, res, next) => {
 
     await account.save();
 
-    //creation du tokenpayload
+    //create user
+    req.body.password = encryptIv(req.body.password);
+    const user = new User(req.body);
+    user.account = account;
+    await user.save();
+
+    //create tokenpayload
     const tokenPayload = {
       username: user.username,
       email: user.email,
       id: user._id,
-      xsrfToken: config.xsrfToken
+      xsrfToken: config.xsrfToken,
+      accountId: account._id
     };
 
-    // creation du token
+    // create token
     const token = jwt.sign(tokenPayload, config.key.privateKey, {
       expiresIn: config.key.tokenExpiry
     });
