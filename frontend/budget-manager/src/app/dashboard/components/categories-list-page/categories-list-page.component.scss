@@ -1,0 +1,73 @@
+
+.bm-card-title {
+  display: flex;
+  .categories-header-title {
+    color: #455a64;
+    font-weight: 400;
+    font-size: 16px;
+    flex: 2;
+  }
+  .categories-header-left-icon {
+    display: block;
+    height: 30px;
+    position: absolute;
+    left: 0px;
+    top: 21px;
+    border: 1px solid blue;
+  }
+}
+
+.category-item-container {
+  height: 100px !important;
+}
+
+img {
+  width: 50px;
+}
+
+.category-item-infos {
+  flex: 2;
+  color: #455a64;
+  padding-left: 10px;
+  padding-right: 10px;
+  .category-item-name {
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .category-item-date {
+    font-size: 12px;
+    margin: 0px !important;
+  }
+}
+
+.category-item-percent {
+  flex: 4;
+  padding-right: 15px;
+}
+
+.category-item-money-saved {
+  flex: 1;
+  .category-item-money-saved-btn,
+  .category-item-money-debt-btn {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 12px;
+    padding: 4px 5px 4px 5px;
+    border-radius: 9px;
+    text-align: center;
+  }
+  .category-item-money-saved-btn {
+    background-color: #ffd740;
+    color: #343a40;
+  }
+  .category-item-money-debt-btn {
+    background-color: #ff4081;
+    color: white;
+  }
+}
+
+.category-item-modify {
+  cursor: pointer;
+  padding-left: 25px;
+  color: #4053AF;
+}

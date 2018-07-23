@@ -7,10 +7,15 @@
 //pink-bluegrey.css
 body {
   background-color: #f4f6f9;
+  color: #455a64;
   // #f1f1f1
 }
 button {
   &:focus {
     outline: none;
   }
+}
+
+.row {
+  margin-top: 10px;
 }

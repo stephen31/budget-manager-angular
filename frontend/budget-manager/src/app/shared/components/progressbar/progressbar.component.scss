@@ -1,0 +1,25 @@
+.progress-container {
+  height: 40px;
+  vertical-align: middle;
+  background-color: #EBEBEB;
+  color: white;
+  font-size: 12px;
+  position: relative;
+  padding: 0px;
+  border-radius: 20px;
+}
+
+.progress-container .custom-progress-bar {
+  display: block;
+  position: relative;
+  height: 100%;
+  background-color: #6A6CD4;
+  border-radius: 20px;
+}
+
+.money-spent {
+  top: 10px;
+  position: absolute;
+  display: block;
+  left: 15px;
+}

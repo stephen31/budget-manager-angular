@@ -1,0 +1,86 @@
+<mat-card>
+  <mat-card-title class="bm-card-title">
+    <span class="categories-header-title">Budget categories</span>
+    <span class="categories-header-button">
+            <button mat-raised-button color="primary">Add category</button>
+          </span>
+    <span class="categories-header-left-icon"></span>
+  </mat-card-title>
+
+  <mat-card-content>
+      <mat-list>
+          <h3 mat-subheader>Folders</h3>
+          <!-- <mat-list-item>
+            <mat-icon mat-list-icon>folder</mat-icon>
+            <h4 mat-line>poiaziei</h4>
+            <p mat-line> rgdggdgdfgdfg </p>
+          </mat-list-item>
+          <mat-list-item>
+              <mat-icon mat-list-icon>folder</mat-icon>
+              <h4 mat-line>bubu</h4>
+              <p mat-line> azazeazeaz </p>
+            </mat-list-item> -->
+            <mat-divider></mat-divider>
+            <mat-list-item class="category-item-container"> 
+                    <img src="assets/images/invoice.png">
+                    <div class="category-item-infos">
+                        <span class="category-item-name">Invoice</span>
+                        <p class="category-item-date"> 300$ per month</p>
+                    </div>
+                    <div class="category-item-percent">
+                        <bm-progressbar percentValue="80%" textInfos="3000$ spent"></bm-progressbar>
+                    </div>
+                    <div class="category-item-money-saved">
+                        <span class="category-item-money-saved-btn">5000$ saved</span>
+                    </div>
+                    <div class="category-item-modify">
+                      <mat-icon>settings</mat-icon>
+                    </div>
+            </mat-list-item>
+          <mat-divider></mat-divider>
+
+            <mat-list-item class="category-item-container"> 
+                <img src="assets/images/shop.png">
+                <div class="category-item-infos">
+                    <span class="category-item-name">Shopping</span>
+                    <p class="category-item-date"> 100$ per month</p>
+                </div>
+                <div class="category-item-percent">
+                    <bm-progressbar percentValue="30%" textInfos="300$ spent" color="yellowgreen"></bm-progressbar>
+                </div>
+                <div class="category-item-money-saved">
+                    <span class="category-item-money-saved-btn">5000$ saved</span>
+                </div>
+                <div class="category-item-modify">
+                  <mat-icon>settings</mat-icon>
+                </div>
+        </mat-list-item>
+          <mat-divider></mat-divider>
+
+        <mat-list-item class="category-item-container"> 
+            <img src="assets/images/rent.png">
+            <div class="category-item-infos">
+                <span class="category-item-name">Rent</span>
+                <p class="category-item-date"> 300$ per month</p>
+            </div>
+            <div class="category-item-percent">
+                <bm-progressbar percentValue="60%" textInfos="900$ spent"></bm-progressbar>
+            </div>
+            <div class="category-item-money-saved">
+                <span class="category-item-money-debt-btn">5000$ saved</span>
+            </div>
+            <div class="category-item-modify">
+              <a><mat-icon>settings</mat-icon></a>
+            </div>
+        </mat-list-item>
+          <mat-divider></mat-divider>
+
+              <!-- <mat-list-item>
+                  <mat-icon mat-list-icon>folder</mat-icon>
+                  <h4 mat-line>bubu</h4>
+                  <p mat-line> vfggrg </p>
+                </mat-list-item> -->
+          <!-- <mat-divider></mat-divider> -->
+        </mat-list>
+  </mat-card-content>
+</mat-card>

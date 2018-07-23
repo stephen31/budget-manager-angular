@@ -6,12 +6,14 @@ import { CookieModule } from 'ngx-cookie';
 import { SharedMaterialModule } from '../shared-material/shared-material.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AuthInterceptor } from './services/auth.interceptors';
-import { HTTP_INTERCEPTORS } from '../../../node_modules/@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NavbarContainerComponent } from './containers/navbar-container/navbar-container.component';
+import { RouterModule } from '@angular/router';
 @NgModule({
   imports: [
     CommonModule,
-    CoreRoutingModule,
+    RouterModule,
+    // CoreRoutingModule,
     SharedMaterialModule,
     CookieModule.forRoot()
   ],

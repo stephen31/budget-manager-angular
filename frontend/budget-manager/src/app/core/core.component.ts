@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthStore } from './store/auth.store';
-import { Observable } from '../../../node_modules/rxjs';
+import { Observable } from 'rxjs';
 import { User } from './models/user.model';
 
 @Component({
