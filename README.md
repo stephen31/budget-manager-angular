@@ -1,2 +1,2 @@
 # budget-manager-angular
-Budget manager web app
+(in development) Budget manager web app ( angular6 , nodejs)
