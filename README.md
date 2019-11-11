@@ -1,4 +1,4 @@
-# budget-manager-angular
+# budget-manager
 (in development) Budget manager web app
 
 Front: Angular 6,
