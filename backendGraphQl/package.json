@@ -28,7 +28,7 @@
     "jsonwebtoken": "^8.2.0",
     "lodash": "^4.17.4",
     "mongoose": "^5.1.4",
-    "node-fetch": "^2.1.2",
+    "node-fetch": "^2.6.1",
     "sequelize": "^4.28.2",
     "sqlite": "^2.9.0"
   },
